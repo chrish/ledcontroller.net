@@ -10,10 +10,10 @@ namespace led.net.console
         {
             ILight light = new DotStarTestLight();
 
-            LedStrip ls = new LedStrip(light, 50, 0.1, 5);
+            LedStrip ls = new LedStrip(light, 50, 0.2, 5);
             Console.WriteLine("Starting init");
 
-            ls.SetAllPixelsToColor(127, Color.Red);
+            ls.SetAllPixelsToColor(50, Color.Red);
         }
     }
 }

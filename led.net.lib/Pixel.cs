@@ -5,7 +5,7 @@ namespace led.net.app
     /// <summary>
     /// Represents a single light with color and brightness. 
     /// </summary>
-    public class Pixel{
+    public class    Pixel{
         public int Brightness {get;set;}
         
         public Color Color{get;set;}

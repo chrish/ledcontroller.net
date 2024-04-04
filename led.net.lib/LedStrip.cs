@@ -35,7 +35,9 @@ namespace led.net.app
 
             for(int i=0; i<numPixels; i++){
                 _currentPixels[i] = new Pixel();
+                Console.WriteLine("Original pixels; brightness " + _currentPixels[i].Brightness + " color " + _currentPixels[i].Color);
             }
+
 
             _light = light;
             _light.Activate();

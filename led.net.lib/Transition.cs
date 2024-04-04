@@ -55,7 +55,7 @@ namespace led.net.app
                     int newBrightness;
 
                     if (i==0){
-                        newBrightness = _originalPixels[j].Brightness-diffs[j].Bright;
+                        newBrightness = _originalPixels[j].Brightness + ((_originalPixels[j].Brightness-diffs[j].Bright)/numFrames);
                         newColor = Color.FromArgb(
                             _originalPixels[j].Color.R-(diffs[j].R/numFrames),
                             _originalPixels[j].Color.G-(diffs[j].G/numFrames),
@@ -63,10 +63,10 @@ namespace led.net.app
                         );
                     }
                     else if (i == numFrames-1){
-                        newBrightness = _newPixels[i].Brightness;
-                        newColor = _newPixels[i].Color;
+                        newBrightness = _newPixels[j].Brightness;
+                        newColor = _newPixels[j].Color;
                     } else {
-                        newBrightness = frames[i-1].Pixels[j].Brightness-diffs[j].Bright;
+                        newBrightness = frames[i-1].Pixels[j].Brightness-diffs[j].Bright/numFrames;
                         newColor = Color.FromArgb(
                             frames[i-1].Pixels[j].Color.R-(diffs[j].R/numFrames),
                             frames[i-1].Pixels[j].Color.G-(diffs[j].G/numFrames),
