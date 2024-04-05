@@ -14,6 +14,10 @@ namespace led.net.console
             Console.WriteLine("Starting init");
 
             ls.SetAllPixelsToColor(50, Color.Red);
+
+            Console.WriteLine("Done setting entire array, now for one pixel");
+            
+            ls.SetPixelToColor(3, 50, Color.Blue);
         }
     }
 }

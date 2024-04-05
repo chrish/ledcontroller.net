@@ -45,18 +45,36 @@ namespace led.net.app
         }
 
         public void SetPixelToColor(uint pixelNumber, Color color){
-            SetPixelToColor(pixelNumber, color, 0);
+            SetPixelToColor(pixelNumber, 127, color);
         }
 
-        public void SetPixelToColor(uint pixelNumber, Color color, uint transitionTime){
-            
+        public void SetPixelToColor(uint pixelNumber, int brightness, Color color){
+            Pixel[] newPixels = new Pixel[_currentPixels.Length];
+
+            for(int i=0; i<newPixels.Length; i++)
+            {
+                if (i == pixelNumber)
+                {
+                    newPixels[i] = new Pixel(brightness, color);
+                } 
+                else 
+                {
+                    newPixels[i] = _currentPixels[i];
+                }
+            }
+
+            Transition t = new Transition(_framesPerSecond, _transitionTimeInSeconds, _currentPixels, newPixels);
+            _light.Show(t.CalculateTransition());
+
+            // Updating the ledstrip so that the new pixels become the current. 
+            _currentPixels = newPixels;
         }
 
-        public void SetAllPixelsToColor(Color color){
-            
-
+        public void SetAllPixelsToColor(Color color)
+        {    
             SetAllPixelsToColor(127, color);
         }
+
         public void SetAllPixelsToColor(int brightness, Color color){
             
             Pixel[] newPixels = new Pixel[_currentPixels.Length];
