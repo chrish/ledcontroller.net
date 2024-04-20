@@ -12,12 +12,17 @@ namespace led.net.console
 
             LedStrip ls = new LedStrip(light, 50, 0.2, 5);
             Console.WriteLine("Starting init");
-
+/*
             ls.SetAllPixelsToColor(50, Color.Red);
 
             Console.WriteLine("Done setting entire array, now for one pixel");
             
             ls.SetPixelToColor(3, 50, Color.Blue);
+*/
+            Console.WriteLine("Circus!");
+            
+            ls.Circus(50, LedStrip.Direction.CLOCKWISE, false);
+
         }
     }
 }

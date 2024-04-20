@@ -22,6 +22,13 @@ namespace led.net.app
             _newPixels = newPixels;
         }
 
+        public Transition(Pixel[] originalPixels, Pixel[] newPixels){
+            FrameratePerSecond = 20;
+            TransitionTimeInSeconds = 0.05;
+            _originalPixels = originalPixels;
+            _newPixels = newPixels;
+        }
+
         /// <summary>
         /// Calculates a transition using the original and new pixel arrays as a base, filling in 
         /// everything in between by averaging and subtracting the difference frame by frame. 
