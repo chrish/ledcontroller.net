@@ -28,8 +28,10 @@ namespace led.net.app
         /// Set initial size and fps, then init the pixel array. 
         /// The pixels will default to 50% brightness and white. 
         /// </summary>
-        /// <param name="fps"></param>
-        /// <param name="numPixels"></param>
+        /// <param name="light">The ILight device to use</param
+        /// <param name="fps">Frames per second when rendering</param>
+        /// <param name="transitionTimeInSeconds">Transition time in seconds for transitions</param>
+        /// <param name="numPixels">Number of pixels in the strip</param>
         public LedStrip(ILight light, uint fps = 50, double transitionTimeInSeconds=0.5, uint numPixels = 144)
         {
             _framesPerSecond = fps;
@@ -73,12 +75,12 @@ namespace led.net.app
             _currentPixels = newPixels;
         }
 
-        public void SetAllPixelsToColor(Color color)
+        public Transition SetAllPixelsToColor(Color color)
         {    
-            SetAllPixelsToColor(127, color);
+            return SetAllPixelsToColor(127, color);
         }
 
-        public void SetAllPixelsToColor(int brightness, Color color){
+        public Transition SetAllPixelsToColor(int brightness, Color color){
             
             Pixel[] newPixels = new Pixel[_currentPixels.Length];
 
@@ -92,6 +94,20 @@ namespace led.net.app
 
             // Updating the ledstrip so that the new pixels become the current. 
             _currentPixels = newPixels;
+
+            return t;
+        }
+
+        private int IndexerStart(Direction dir){
+            if (dir == Direction.CLOCKWISE){
+                return 0;
+            } else {
+                return _currentPixels.Length-1;
+            }
+        }
+
+        private bool ContinueLoop(int indexer){
+            return false;
         }
 
         public async void Circus(uint speed, Direction dir, bool showSameOnWholeArray=true){
@@ -107,7 +123,7 @@ namespace led.net.app
             while(_circusIsRunning){
                 var oldPixels = _currentPixels;
                 
-                for(int i =0; i<_currentPixels.Length; i++){
+                for(int i = IndexerStart(dir); i<_currentPixels.Length; i++){
                     var currentPixel = _currentPixels[i];
                     var prevPixel = _currentPixels[i];
                     if (i == 0){
@@ -115,7 +131,6 @@ namespace led.net.app
                     } else {
                         prevPixel = _currentPixels[i-1];
                     }
-
 
                     if (currentPixel.ActiveColor == Color.Red){
                         if (currentPixel.Color.B >= 255 && currentPixel.Color.R > 0) {

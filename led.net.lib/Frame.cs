@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace led.net.app{
 
     /// <summary>
@@ -23,6 +25,10 @@ namespace led.net.app{
 
         public Frame(Pixel[] pixels){
             Pixels = pixels;
+        }
+
+        public string Serialize(){
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
