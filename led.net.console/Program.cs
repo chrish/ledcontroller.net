@@ -16,11 +16,13 @@ namespace led.net.console
                 Color newColor = Color.FromName(args[0]);
                 if (newColor.IsKnownColor)
                 {
+                    Console.WriteLine("Found known color: " + newColor.Name);
                     defaultColor = newColor;
                 }
 
                 if (args[0].Equals("circus"))
                 {
+                    Console.WriteLine("Enabling circus");
                     circus = true;
                 } 
                 else 
