@@ -8,21 +8,42 @@ namespace led.net.console
     {
         static void Main(string[] args)
         {
-            ILight light = new DotStarTestLight();
+            Color defaultColor = Color.White;
+            bool circus = false;
 
-            LedStrip ls = new LedStrip(light, 50, 0.2, 5);
-            Console.WriteLine("Starting init");
-/*
-            ls.SetAllPixelsToColor(50, Color.Red);
+            if(args.Length > 0)
+            {
+                Color newColor = Color.FromName(args[0]);
+                if (newColor.IsKnownColor)
+                {
+                    defaultColor = newColor;
+                }
 
-            Console.WriteLine("Done setting entire array, now for one pixel");
+                if (args[0].Equals("circus"))
+                {
+                    circus = true;
+                } 
+                else 
+                {
+                    circus = false;
+                }
+            }
             
-            ls.SetPixelToColor(3, 50, Color.Blue);
-*/
-            Console.WriteLine("Circus!");
-            
-            ls.Circus(50, LedStrip.Direction.CLOCKWISE, false);
 
+            ILight light = new DotStar();
+
+            LedStrip ls = new LedStrip(light, 50, 2, 144);
+            
+            if (!circus)
+            {
+                ls.SetAllPixelsToColor(255, defaultColor);
+
+            } 
+            else 
+            {
+                Console.WriteLine("Circus!");
+                ls.Circus(255, LedStrip.Direction.CLOCKWISE, false);
+            }
         }
     }
 }
