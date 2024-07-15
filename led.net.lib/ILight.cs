@@ -4,6 +4,6 @@ namespace led.net.app
     {
         public void Activate();
 
-        public bool Show(Frame[] frames);
+        public bool Show(Frame[] frames, int waitBetweenFrames);
     }
 }

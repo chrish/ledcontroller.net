@@ -11,7 +11,7 @@
             
         }
 
-        public bool Show(Frame[] transition){
+        public bool Show(Frame[] transition, int waitBetweenFrames){
             try{
                 int frameCounter = 0;
                 int pixelCounter = 0;
@@ -21,6 +21,7 @@
 
                     pixelCounter=0;
                     frameCounter++;
+                    Thread.Sleep(waitBetweenFrames);
                 }
             } catch (Exception e)
             {

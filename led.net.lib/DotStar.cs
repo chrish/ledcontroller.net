@@ -11,10 +11,9 @@ namespace led.net.app
     {
         private uint DataPin { get; set; }
         private uint ClockPin { get; set; }
-        
         private SpiDevice _spiDevice { get; set; }
 
-        public DotStar(uint dataPin=11, uint clockPin=12)
+        public DotStar(uint dataPin = 11, uint clockPin = 12, int ledCount = 20)
         {
             DataPin = dataPin;
             ClockPin = clockPin;
@@ -22,7 +21,8 @@ namespace led.net.app
             Activate();
         }
 
-        public async void Activate(){
+        public async void Activate()
+        {
             var spiConnectionSettings = new SpiConnectionSettings(0, 0) // Using bus 0 and chip select line 0
             {
                 ClockFrequency = 2_400_000, // DotStar LEDs typically work well with 2.4MHz
@@ -33,12 +33,20 @@ namespace led.net.app
             _spiDevice = SpiDevice.Create(spiConnectionSettings);
         }
 
-        public bool Show(Frame[] transition){
-            try{
-                foreach(Frame f in transition){
-                    _spiDevice.Write(f.Render());
+        public bool Show(Frame[] transition, int waitBetweenFrames)
+        { 
+            // TODO: Save current state as last frame in transition
+            try
+            {
+                foreach (Frame f in transition)
+                {
+                    _spiDevice.Write(f.GetPixelData());
+                    Thread.Sleep(waitBetweenFrames);
+                    
                 }
-            } catch (Exception e)
+
+            }
+            catch (Exception e)
             {
                 return false;
             }
@@ -46,7 +54,8 @@ namespace led.net.app
             return true;
         }
 
-        public void Dispose(){
+        public void Dispose()
+        {
             _spiDevice?.Dispose();
         }
     }

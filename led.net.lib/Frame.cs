@@ -8,7 +8,8 @@ namespace led.net.app{
     public class Frame{
 
         public Pixel[] Pixels{get;set;}
-        public byte[] Render(){
+
+        public byte[] GetPixelData (){
             byte[] pixelData = new byte[Pixels.Length*4];
 
             for(int i=0; i<Pixels.Length; i++){

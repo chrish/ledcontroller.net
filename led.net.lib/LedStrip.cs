@@ -69,7 +69,7 @@ namespace led.net.app
             }
 
             Transition t = new Transition(_framesPerSecond, _transitionTimeInSeconds, _currentPixels, newPixels);
-            _light.Show(t.CalculateTransition());
+            _light.Show(t.CalculateTransition(), Convert.ToInt32(Math.Floor((double)1000/t.FrameratePerSecond)));
 
             // Updating the ledstrip so that the new pixels become the current. 
             _currentPixels = newPixels;
@@ -90,7 +90,7 @@ namespace led.net.app
             }
 
             Transition t = new Transition(_framesPerSecond, _transitionTimeInSeconds, _currentPixels, newPixels);
-            _light.Show(t.CalculateTransition());
+            _light.Show(t.CalculateTransition(), Convert.ToInt32(Math.Floor((double)1000/t.FrameratePerSecond)));
 
             // Updating the ledstrip so that the new pixels become the current. 
             _currentPixels = newPixels;
@@ -195,7 +195,7 @@ namespace led.net.app
                 }
 
                 Transition t = new Transition(oldPixels, _currentPixels);
-                _light.Show(t.CalculateTransition());
+                _light.Show(t.CalculateTransition(), Convert.ToInt32(Math.Floor((double)1000/t.FrameratePerSecond)));
                 Thread.Sleep(actualWait);
 
             }
